@@ -15,11 +15,15 @@ namespace WCFServiceWebRole1
     public class Service1 : IService1
     {
 
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=G:\Git repo\QUIZLAND\WCFServiceWebRole1\App_Data\lab7.mdf;Integrated Security=True");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=|DataDirectory|lab7.mdf;Integrated Security=True");
         private static SqlCommand com = new SqlCommand();
         private SqlDataReader re;
 
-        
+        public string blaha()
+        {
+            return "FUCKOFFANDDIE";
+        }
+
 
         public string AddWord(string lang1, string lang2, string word1, string word2)
         {
