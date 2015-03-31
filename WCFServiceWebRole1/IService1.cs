@@ -26,7 +26,7 @@ namespace WCFServiceWebRole1
         List<string> getDictionary();
 
         [OperationContract]
-        List<List<string>> getUsers();
+        List<string> getUsers();
 
         [OperationContract]
         string setQuiz(string userId, string questionW);
@@ -36,6 +36,9 @@ namespace WCFServiceWebRole1
 
         [OperationContract]
         string SetGrade(string grade);
+
+        [OperationContract]
+        string blaha();
     }
 
 

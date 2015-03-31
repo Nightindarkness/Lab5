@@ -72,30 +72,25 @@ namespace WCFServiceWebRole1
             return toWords;
         }
 
-        public List<List<string>> getUsers()
+        public List<string> getUsers()
         {
             com.Connection = con; 
             con.Open();
             com.CommandText = "select userId from users";
             re = com.ExecuteReader();
-            List<string> userId = new List<string>();
-            List<string> userName = new List<string>();
-            List<string> native = new List<string>();
+            List<string> users = new List<string>();
+            
              if (re.HasRows)
             {
                 while (re.Read())
                 {
 
-                     userId.Add(re["userId"].ToString());
-                     userName.Add(re["name"].ToString());
-                     native.Add(re["nativeLang"].ToString());
+                     users.Add(re["userId"].ToString()+":"+re["name"].ToString());
+                     
                 }
             }
 
-             List<List<string>> users = new List<List<string>>();
-             users.Add(userId);
-             users.Add(userName);
-             users.Add(native);
+             
              con.Close();
              return users;
         }
