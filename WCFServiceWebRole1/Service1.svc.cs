@@ -15,7 +15,7 @@ namespace WCFServiceWebRole1
     public class Service1 : IService1
     {
 
-        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=G:\Visual studio projekt\QUIZLANG\WCFServiceWebRole1\App_Data\lab7.mdf;Integrated Security=True");
+        private static SqlConnection con = new SqlConnection(@"Data Source=(LocalDB)\v11.0;AttachDbFilename=G:\Git repo\QUIZLAND\WCFServiceWebRole1\App_Data\lab7.mdf;Integrated Security=True");
         private static SqlCommand com = new SqlCommand();
         private SqlDataReader re;
 
@@ -40,6 +40,73 @@ namespace WCFServiceWebRole1
         }
 
         public string DeleteWord(string word1, string word2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<string> getDictionary()
+        {
+            //List<string> words = new List<string>();
+            List<string> toWords = new List<string>();
+            com.Connection = con; 
+            con.Open();
+            com.CommandText = "select * from dictionary";
+            re = com.ExecuteReader();
+            int i = 0;
+            if (re.HasRows)
+            {
+                while (re.Read())
+                {
+
+                    toWords.Add(re["lang1"].ToString()+" to "+re["lang2"].ToString()+" :"+re["word1"].ToString()+":"+re["word2"].ToString());
+                    i++;
+                }
+            }
+
+            con.Close();
+
+            return toWords;
+        }
+
+        public List<List<string>> getUsers()
+        {
+            com.Connection = con; 
+            con.Open();
+            com.CommandText = "select userId from users";
+            re = com.ExecuteReader();
+            List<string> userId = new List<string>();
+            List<string> userName = new List<string>();
+            List<string> native = new List<string>();
+             if (re.HasRows)
+            {
+                while (re.Read())
+                {
+
+                     userId.Add(re["userId"].ToString());
+                     userName.Add(re["name"].ToString());
+                     native.Add(re["nativeLang"].ToString());
+                }
+            }
+
+             List<List<string>> users = new List<List<string>>();
+             users.Add(userId);
+             users.Add(userName);
+             users.Add(native);
+             con.Close();
+             return users;
+        }
+
+        public string setQuiz(string userId, string questionW)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string getAnswers(string userId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public string SetGrade(string grade)
         {
             throw new NotImplementedException();
         }

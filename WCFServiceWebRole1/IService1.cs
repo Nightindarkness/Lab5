@@ -21,6 +21,21 @@ namespace WCFServiceWebRole1
 
         [OperationContract]
         string DeleteWord(string word1, string word2);
+
+        [OperationContract]
+        List<string> getDictionary();
+
+        [OperationContract]
+        List<List<string>> getUsers();
+
+        [OperationContract]
+        string setQuiz(string userId, string questionW);
+
+        [OperationContract]
+        string getAnswers(string userId);
+
+        [OperationContract]
+        string SetGrade(string grade);
     }
 
 
