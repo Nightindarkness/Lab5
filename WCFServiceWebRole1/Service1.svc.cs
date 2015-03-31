@@ -48,22 +48,48 @@ namespace WCFServiceWebRole1
             throw new NotImplementedException();
         }
 
-        public List<string> getDictionary()
+        public List<string> getDictionary(string studentId)
         {
             //List<string> words = new List<string>();
-            List<string> toWords = new List<string>();
-            com.Connection = con; 
+            com.Connection = con;
             con.Open();
-            com.CommandText = "select * from dictionary";
+            com.CommandText = "select nativeLang, learntLang from users "+"where userId="+studentId;
             re = com.ExecuteReader();
-            int i = 0;
+            string nativeLang ="";
+            string learnLang="";
+            List<string> toWords = new List<string>();
             if (re.HasRows)
             {
                 while (re.Read())
                 {
+                    
+                       
+                    
+                    nativeLang = re["nativeLang"].ToString();
+                    learnLang = re["learntLang"].ToString();
+                    toWords.Add(nativeLang + " to " + learnLang);
+                }
+            }
+            con.Close();
+            com.Connection = con;
+            con.Open();
+            
+            
+            com.CommandText = "select * from dictionary";
+            re = com.ExecuteReader();
+            int i = 0;
+           
+            if (re.HasRows)
+            {
+                while (re.Read())
+                {
+                    
 
-                    toWords.Add(re["lang1"].ToString()+" to "+re["lang2"].ToString()+" :"+re["word1"].ToString()+":"+re["word2"].ToString());
+                    if (re["lang1"].ToString().Equals(nativeLang) && re["lang2"].ToString().Equals(learnLang))
+                    {
+                    toWords.Add(re["word1"].ToString()+":"+re["word2"].ToString());
                     i++;
+                    }
                 }
             }
 
@@ -76,7 +102,7 @@ namespace WCFServiceWebRole1
         {
             com.Connection = con; 
             con.Open();
-            com.CommandText = "select userId from users";
+            com.CommandText = "select * from users";
             re = com.ExecuteReader();
             List<string> users = new List<string>();
             
@@ -95,14 +121,39 @@ namespace WCFServiceWebRole1
              return users;
         }
 
-        public string setQuiz(string userId, string questionW)
+        public void setQuiz(string userId, string questionW)
         {
-            throw new NotImplementedException();
+
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "insert into quiz (userId, question) values ('" + userId + "','" + questionW + "')";
+            com.ExecuteNonQuery();
+            
+            con.Close();
+            
         }
 
-        public string getAnswers(string userId)
+        public List<string> getAnswers(string userId)
         {
-            throw new NotImplementedException();
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "select question, answer from quiz "+"where userId="+userId;
+            re = com.ExecuteReader();
+            List<string> answers = new List<string>();
+
+            if (re.HasRows)
+            {
+                while (re.Read())
+                {
+
+                    answers.Add(re["question"].ToString() + ":" + re["answer"].ToString());
+
+                }
+            }
+
+
+            con.Close();
+            return answers;
         }
 
         public string SetGrade(string grade)
