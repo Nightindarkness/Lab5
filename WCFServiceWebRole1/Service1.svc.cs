@@ -19,10 +19,7 @@ namespace WCFServiceWebRole1
         private static SqlCommand com = new SqlCommand();
         private SqlDataReader re;
 
-        public string blaha()
-        {
-            return "FUCKOFFANDDIE";
-        }
+       
 
 
         public string AddWord(string lang1, string lang2, string word1, string word2)
@@ -33,7 +30,7 @@ namespace WCFServiceWebRole1
             com.ExecuteNonQuery();
             com.Clone();
             con.Close();
-            //return string.Format("You entered: {0}", value);
+            
             return string.Format("You sucessfully your words to the database");
 
         }
@@ -113,6 +110,75 @@ namespace WCFServiceWebRole1
         public string SetGrade(string grade)
         {
             throw new NotImplementedException();
+        }
+
+
+        public string Register(string name, string nativelang, string learntlang)
+        {
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "insert into users (name, nativeLang, learntLang) values ('" + name + "','" + nativelang + "','" + learntlang + "')";
+            com.ExecuteNonQuery();
+            com.Clone();
+            con.Close();
+            return string.Format("You have sucessfully registered");
+            
+        }
+
+        public List<string> getUser(string user)
+        {
+            
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "select userId from users where name = '"+user+"'";
+            re=com.ExecuteReader();
+            List<string> userid = new List<string>();
+            while (re.Read())
+            {
+
+               userid.Add(re["userId"].ToString());
+
+            }
+            
+            con.Close();
+            return userid;
+        }
+
+
+        public List<string> getQuiz(int id)
+        {
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "select question from quiz where userId= '"+id+"'";
+            re = com.ExecuteReader();
+            List<string> question = new List<string>();
+            
+          
+            //if (re.HasRows)
+            //{
+                while (re.Read())
+                {
+
+                    question.Add(re["question"].ToString());
+                    
+                }
+            //}
+            con.Close();
+
+            return question;
+        }
+
+
+        public string sendQuiz(int id, string answer)
+        {
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "update quiz set answer= '"+answer+"' where userId= '"+id+"'";
+            com.ExecuteNonQuery();
+            com.Clone();
+            con.Close();
+            
+            return string.Format("UPDATE");
         }
     }
 }
