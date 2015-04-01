@@ -31,7 +31,6 @@ namespace WCFServiceWebRole1
             con.Open();
             com.CommandText = "insert into dictionary (lang1, lang2, word1, word2) values ('" + lang1 + "','" + lang2 + "','" + word1 + "','" + word2 + "')";
             com.ExecuteNonQuery();
-            com.Clone();
             con.Close();
             //return string.Format("You entered: {0}", value);
             return string.Format("You sucessfully your words to the database");
@@ -50,7 +49,7 @@ namespace WCFServiceWebRole1
 
         public List<string> getDictionary(string studentId)
         {
-            //List<string> words = new List<string>();
+            //List<List<string>> words = new List<string>();
             com.Connection = con;
             con.Open();
             com.CommandText = "select nativeLang, learntLang from users "+"where userId="+studentId;
@@ -156,7 +155,7 @@ namespace WCFServiceWebRole1
             return answers;
         }
 
-        public string SetGrade(string grade)
+        public void SetGrade(string grade)
         {
             throw new NotImplementedException();
         }

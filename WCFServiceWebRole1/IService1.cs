@@ -35,7 +35,7 @@ namespace WCFServiceWebRole1
         List<string> getAnswers(string userId);
 
         [OperationContract]
-        string SetGrade(string grade);
+        void SetGrade(string grade);
 
         [OperationContract]
         string blaha();
