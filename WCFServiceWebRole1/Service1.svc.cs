@@ -236,11 +236,11 @@ namespace WCFServiceWebRole1
         }
 
 
-        public string sendQuiz(int id, string answer)
+        public string sendQuiz(string id,string question , string answer)
         {
             com.Connection = con;
             con.Open();
-            com.CommandText = "update quiz set answer= '"+answer+"' where userId= '"+id+"'";
+            com.CommandText = "update quiz set answer= '"+answer+"' where userId= '"+id+"' and question='"+question+"'";
             com.ExecuteNonQuery();
             con.Close();
             

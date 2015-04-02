@@ -38,7 +38,16 @@ namespace WCFServiceWebRole1
         string SetGrade(string grade, string userId);
 
         [OperationContract]
-        List<string> getAdminDictionary();
+        List<string> getUser(string user);
+
+        [OperationContract]
+        List<string> getQuiz(int id);
+
+        [OperationContract]
+        string Register(string name, string nativelang, string learntlang);
+
+        [OperationContract]
+        string sendQuiz(string id,string question, string answer);
     }
 
 
