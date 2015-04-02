@@ -17,10 +17,10 @@ namespace WCFServiceWebRole1
         string AddWord(string lang1, string lang2, string word1, string word2);
 
         [OperationContract]
-        string ChangeWord(string word1, string word2);
+        string ChangeWord(string column,string columnData, string word);
 
         [OperationContract]
-        string DeleteWord(string word1, string word2);
+        string DeleteWord(string lang, string word);
 
         [OperationContract]
         List<string> getDictionary(string studentId);
@@ -35,10 +35,10 @@ namespace WCFServiceWebRole1
         List<string> getAnswers(string userId);
 
         [OperationContract]
-        void SetGrade(string grade);
+        string SetGrade(string grade, string userId);
 
         [OperationContract]
-        string SetGrade(string grade);
+        List<string> getAdminDictionary();
     }
 
 

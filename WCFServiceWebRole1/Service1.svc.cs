@@ -34,14 +34,24 @@ namespace WCFServiceWebRole1
 
         }
 
-        public string ChangeWord(string word1, string word2)
+        public string ChangeWord(string column,string columnData, string word)
         {
-            throw new NotImplementedException();
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "update dictionary set " +column+"= '" + columnData + "' where word1= '" + word + "'";
+            com.ExecuteNonQuery();
+            con.Close();
+            return string.Format("You have sucessfully changed "+column +" to "+ columnData);
         }
 
-        public string DeleteWord(string word1, string word2)
+        public string DeleteWord(string lang, string word)
         {
-            throw new NotImplementedException();
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "delete from dictionary where lang1='" + lang + "' and word1='" + word +"'";
+            com.ExecuteNonQuery();
+            con.Close();
+            return string.Format("You have now deleted the row for the word "+word);
         }
 
         public List<string> getDictionary(string studentId)
@@ -152,9 +162,22 @@ namespace WCFServiceWebRole1
             return answers;
         }
 
-        public void SetGrade(string grade)
+        public string SetGrade(string grade, string userId)
         {
-            throw new NotImplementedException();
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "update users set grade= '" + grade + "' where userId= '" + userId + "'";
+            com.ExecuteNonQuery();
+            con.Close();
+
+
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "delete from quiz where userId= '" + userId + "'";
+            com.ExecuteNonQuery();
+            con.Close();
+
+            return string.Format("You have set the grade to "+ grade +" and sucessfully deleted the quiz for this user.");
         }
 
 
@@ -164,7 +187,6 @@ namespace WCFServiceWebRole1
             con.Open();
             com.CommandText = "insert into users (name, nativeLang, learntLang) values ('" + name + "','" + nativelang + "','" + learntlang + "')";
             com.ExecuteNonQuery();
-            com.Clone();
             con.Close();
             return string.Format("You have sucessfully registered");
             
@@ -220,10 +242,33 @@ namespace WCFServiceWebRole1
             con.Open();
             com.CommandText = "update quiz set answer= '"+answer+"' where userId= '"+id+"'";
             com.ExecuteNonQuery();
-            com.Clone();
             con.Close();
             
             return string.Format("UPDATE");
+        }
+
+
+        public List<string> getAdminDictionary()
+        {
+            com.Connection = con;
+            con.Open();
+            com.CommandText = "select * from dictionary";
+            re = com.ExecuteReader();
+            List<string> words = new List<string>();
+
+            if (re.HasRows)
+            {
+                while (re.Read())
+                {
+
+                    words.Add(re[0].ToString());
+
+                }
+            }
+
+
+            con.Close();
+            return words;
         }
     }
 }
